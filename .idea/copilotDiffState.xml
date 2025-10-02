@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/email-service/build.gradle.kts">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/email-service/build.gradle.kts" />
+              <option name="originalContent" value="plugins {&#10;    id(&quot;java&quot;)&#10;}&#10;&#10;group = &quot;ukma.springboot.nextskill&quot;&#10;version = &quot;1.0-SNAPSHOT&quot;&#10;&#10;repositories {&#10;    mavenCentral()&#10;}&#10;&#10;dependencies {&#10;    testImplementation(platform(&quot;org.junit:junit-bom:5.10.0&quot;))&#10;    testImplementation(&quot;org.junit.jupiter:junit-jupiter&quot;)&#10;    implementation(&quot;org.springframework.boot:spring-boot-starter&quot;)&#10;    implementation(&quot;org.springframework.boot:spring-boot-starter-mail&quot;)&#10;    implementation(&quot;org.springframework.boot:spring-boot-starter-web&quot;)&#10;    compileOnly(&quot;org.projectlombok:lombok:1.18.30&quot;)&#10;    annotationProcessor(&quot;org.projectlombok:lombok:1.18.30&quot;)&#10;}&#10;&#10;tasks.bootJar {&#10;    archiveFileName.set(&quot;NextSkill-email-service.jar&quot;)&#10;}&#10;&#10;tasks.test {&#10;    useJUnitPlatform()&#10;}" />
+              <option name="updatedContent" value="plugins {&#10;    id(&quot;java&quot;)&#10;}&#10;&#10;group = &quot;ukma.springboot.nextskill&quot;&#10;version = &quot;1.0-SNAPSHOT&quot;&#10;&#10;repositories {&#10;    mavenCentral()&#10;}&#10;&#10;dependencies {&#10;    testImplementation(platform(&quot;org.junit:junit-bom:5.10.0&quot;))&#10;    testImplementation(&quot;org.junit.jupiter:junit-jupiter&quot;)&#10;    implementation(&quot;org.springframework.boot:spring-boot-starter&quot;)&#10;    implementation(&quot;org.springframework.boot:spring-boot-starter-mail&quot;)&#10;    implementation(&quot;org.springframework.boot:spring-boot-starter-web&quot;)&#10;    compileOnly(&quot;org.projectlombok:lombok:1.18.30&quot;)&#10;    annotationProcessor(&quot;org.projectlombok:lombok:1.18.30&quot;)&#10;}&#10;&#10;tasks.bootJar {&#10;    archiveFileName.set(&quot;NextSkill-email-service.jar&quot;)&#10;}&#10;&#10;tasks.test {&#10;    useJUnitPlatform()&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/webapp/src/main/resources/application.properties">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/webapp/src/main/resources/application.properties" />
+              <option name="originalContent" value="spring.application.name=NextSkill&#10;&#10;spring.config.import=optional:file:.env[.properties]&#10;&#10;# Allows to view changes in templates during runtime&#10;spring.thymeleaf.cache=false&#10;&#10;spring.datasource.url=jdbc:postgresql://${DB_HOST}:${DB_PORT}/${POSTGRES_DB}&#10;spring.datasource.username=${POSTGRES_USER}&#10;spring.datasource.password=${POSTGRES_PASSWORD}&#10;spring.jpa.hibernate.ddl-auto=create-drop&#10;&#10;spring.mail.host=smtp.gmail.com&#10;spring.mail.port=587&#10;spring.mail.username=${EMAIL_USERNAME}&#10;spring.mail.password=${EMAIL_PASSWORD}&#10;spring.mail.properties.mail.smtp.auth=true&#10;spring.mail.properties.mail.smtp.starttls.enable=true&#10;&#10;# Email service URL for internal communication in Kubernetes&#10;email.service.url=http://email-service:8080" />
+              <option name="updatedContent" value="spring.application.name=NextSkill&#13;&#10;&#13;&#10;spring.config.import=optional:file:.env[.properties]&#13;&#10;&#13;&#10;# Allows to view changes in templates during runtime&#13;&#10;spring.thymeleaf.cache=false&#13;&#10;&#13;&#10;spring.datasource.url=jdbc:postgresql://${DB_HOST}:${DB_PORT}/${POSTGRES_DB}&#13;&#10;spring.datasource.username=${POSTGRES_USER}&#13;&#10;spring.datasource.password=${POSTGRES_PASSWORD}&#13;&#10;spring.jpa.hibernate.ddl-auto=create-drop&#13;&#10;&#13;&#10;spring.mail.host=smtp.gmail.com&#13;&#10;spring.mail.port=587&#13;&#10;spring.mail.username=${EMAIL_USERNAME}&#13;&#10;spring.mail.password=${EMAIL_PASSWORD}&#13;&#10;spring.mail.properties.mail.smtp.auth=true&#13;&#10;spring.mail.properties.mail.smtp.starttls.enable=true&#13;&#10;&#13;&#10;# Email service URL for internal communication in Kubernetes&#13;&#10;email.service.url=http://email-service:8080" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
