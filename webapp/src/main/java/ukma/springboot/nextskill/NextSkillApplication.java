@@ -33,7 +33,6 @@ public class NextSkillApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-
         UserView teacher = UserView.builder()
                 .username("teacher")
                 .name("Oleksander")
