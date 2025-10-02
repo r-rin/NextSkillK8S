@@ -17,8 +17,7 @@ import ukma.springboot.nextskill.common.models.enums.UserRole;
 import ukma.springboot.nextskill.user.UserService;
 import ukma.springboot.nextskill.user.service.AuthenticationServiceImpl;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)

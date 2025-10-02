@@ -14,7 +14,7 @@ import ukma.springboot.nextskill.user.security.JWTUtility;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class JWTUtilityTests {

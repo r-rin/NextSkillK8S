@@ -16,6 +16,7 @@ import ukma.springboot.nextskill.common.models.views.UserView;
 import ukma.springboot.nextskill.user.repository.UserRepository;
 import ukma.springboot.nextskill.user.service.UserServiceImpl;
 import ukma.springboot.nextskill.user.validation.UserValidator;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Optional;
 import java.util.UUID;
