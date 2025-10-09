@@ -19,6 +19,7 @@ import ukma.springboot.nextskill.course.repository.CourseRepository;
 import ukma.springboot.nextskill.course.validation.CourseValidator;
 import ukma.springboot.nextskill.email.EmailSendEvent;
 import ukma.springboot.nextskill.user.UserService;
+import ukma.springboot.nextskill.user.repository.UserRepository;
 
 import java.util.List;
 import java.util.UUID;
@@ -28,7 +29,9 @@ import java.util.UUID;
 public class CourseServiceImpl implements CourseService {
 
     private static final String COURSE = "Course";
+    private static final String USER = "User";
     private CourseRepository courseRepository;
+    private UserRepository userRepository;
     private UserService userService;
     private CourseValidator courseValidator;
     private ApplicationEventPublisher eventPublisher;
@@ -110,11 +113,12 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional
     public boolean isEnrolled(UUID courseUuid, UUID studentUuid) {
         CourseEntity courseEntity = courseRepository.findById(courseUuid)
                 .orElseThrow(() -> new ResourceNotFoundException(COURSE, courseUuid));
-        Hibernate.initialize(courseEntity.getStudents());
-        UserResponse userEntity = userService.get(studentUuid);
+        UserEntity userEntity = userRepository.findById(studentUuid)
+            .orElseThrow(() -> new ResourceNotFoundException(USER, studentUuid));
         return (courseEntity.getStudents().contains(userEntity));
     }
 
@@ -123,9 +127,10 @@ public class CourseServiceImpl implements CourseService {
     public void enrollStudent(UUID courseId, UUID studentId) {
         CourseEntity courseEntity = courseRepository.findById(courseId)
                 .orElseThrow(() -> new ResourceNotFoundException(COURSE, courseId));
-        UserResponse userEntity = userService.get(studentId);
-        if (!isEnrolled(courseId, studentId)) {
-            courseEntity.getStudents().add(UserEntity.builder().uuid(studentId).build());
+        UserEntity userEntity = userRepository.findById(studentId)
+            .orElseThrow(() -> new ResourceNotFoundException(USER, courseId));
+        if (!courseEntity.getStudents().contains(userEntity)) {
+            courseEntity.getStudents().add(userEntity);
         }
         else throw new IllegalArgumentException("User is already enrolled to course");
         courseRepository.save(courseEntity);
@@ -135,11 +140,13 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void unrollStudent(UUID courseUuid, UUID studentUuid) {
-        CourseEntity courseEntity = courseRepository.findById(courseUuid)
-                .orElseThrow(() -> new ResourceNotFoundException(COURSE, courseUuid));
-        UserResponse userEntity = userService.get(studentUuid);
-        if (isEnrolled(courseUuid, studentUuid))
+    @Transactional
+    public void unrollStudent(UUID courseId, UUID studentId) {
+        CourseEntity courseEntity = courseRepository.findById(courseId)
+            .orElseThrow(() -> new ResourceNotFoundException(COURSE, courseId));
+        UserEntity userEntity = userRepository.findById(studentId)
+            .orElseThrow(() -> new ResourceNotFoundException(USER, courseId));
+        if (courseEntity.getStudents().contains(userEntity))
             courseEntity.getStudents().remove(userEntity);
         else throw new IllegalArgumentException("User is not enrolled to course");
         courseRepository.save(courseEntity);
