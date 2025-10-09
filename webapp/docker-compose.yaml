@@ -1,0 +1,17 @@
+version: "3.8"
+name: next-skill-db
+services:
+  next-skill-db:
+    image: postgres:13.4
+    container_name: next-skill-database
+    environment:
+      POSTGRES_DB: nextskilldb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - database:/var/lib/postgresql/data
+
+volumes:
+  database:
