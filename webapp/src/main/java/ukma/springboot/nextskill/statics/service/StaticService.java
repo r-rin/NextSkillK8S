@@ -2,8 +2,11 @@ package ukma.springboot.nextskill.statics.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Recover;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
@@ -24,8 +27,19 @@ public class StaticService {
         return new ClassPathResource("static/video/interesting_video.mp4");
     }
 
+    @Retryable(
+        recover = "getJsonRecover",
+        retryFor = { RestClientException.class },
+        maxAttempts = 2,
+        backoff = @Backoff(delay = 1200, multiplier = 2)
+    )
     public Object getJson() {
+        return restTemplate.getForObject("https://www.reddit.com/r/ios/top.json", Object.class);
+    }
+
+    @Recover
+    public Object getJsonRecover(Exception e) {
+        System.out.println("Recovering from Exception: " + e.getMessage());
         return new ClassPathResource("static/json/example.json");
-        //return restTemplate.getForObject("https://www.reddit.com/r/ios/top.json", Object.class);
     }
 }
