@@ -26,7 +26,7 @@ public class UserController {
 
     @GetMapping("user/{id}")
     public String getUser(@PathVariable UUID id, Model model) {
-        UserResponse user = userService.getResponse(id);
+        UserResponse user = userService.get(id);
         model.addAttribute("currentUser", userService.getAuthenticatedUser());
         model.addAttribute("user", userService.getWithCourses(user.getUuid()));
         return "profile";

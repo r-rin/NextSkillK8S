@@ -10,6 +10,8 @@ import java.util.UUID;
 
 public interface UserService {
 
+    UserEntity getEntity(UUID id);
+
     List<UserResponse> getAll();
     UserResponse get(UUID id);
     UserResponse create(UserView view);
@@ -25,6 +27,4 @@ public interface UserService {
 
     UserResponse getWithCourses(UUID userId);
     List<CourseResponse> getCourses(UUID userId);
-
-    UserResponse getResponse(UUID id);
 }

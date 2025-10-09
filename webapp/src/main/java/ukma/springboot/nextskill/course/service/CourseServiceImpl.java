@@ -19,7 +19,6 @@ import ukma.springboot.nextskill.course.repository.CourseRepository;
 import ukma.springboot.nextskill.course.validation.CourseValidator;
 import ukma.springboot.nextskill.email.EmailSendEvent;
 import ukma.springboot.nextskill.user.UserService;
-import ukma.springboot.nextskill.user.repository.UserRepository;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,12 +28,15 @@ import java.util.UUID;
 public class CourseServiceImpl implements CourseService {
 
     private static final String COURSE = "Course";
-    private static final String USER = "User";
     private CourseRepository courseRepository;
-    private UserRepository userRepository;
     private UserService userService;
     private CourseValidator courseValidator;
     private ApplicationEventPublisher eventPublisher;
+
+    @Override
+    public CourseEntity getEntity(UUID id) {
+        return courseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(COURSE, id));
+    }
 
     @Override
     public List<CourseResponse> getAll() {
@@ -43,8 +45,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CourseResponse get(UUID id) {
-        CourseEntity courseEntity = courseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(COURSE, id));
-        return CourseMapper.toCourseResponse(courseEntity);
+        return CourseMapper.toCourseResponse(getEntity(id));
     }
 
     @Override
@@ -57,8 +58,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public CourseResponse update(CourseView courseView) {
         courseValidator.validateForUpdate(courseView);
-        CourseEntity existingCourse = courseRepository.findById(courseView.getUuid())
-                .orElseThrow(() -> new ResourceNotFoundException(COURSE, courseView.getUuid()));
+        CourseEntity existingCourse = getEntity(courseView.getUuid());
         CourseEntity courseEntity = courseRepository.save(CourseMapper.toCourseEntity(courseView, existingCourse));
         return CourseMapper.toCourseResponse(courseEntity);
     }
@@ -66,8 +66,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public void delete(UUID id) {
         UserResponse currentUser = userService.getAuthenticatedUser();
-        CourseEntity courseEntity = courseRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(COURSE, id));
+        CourseEntity courseEntity = getEntity(id);
 
         if (currentUser.getRole() != UserRole.ADMIN && !courseEntity.getTeacher().getUuid().equals(currentUser.getUuid())) {
             throw new NoAccessException("You do not have permission to delete this course.");
@@ -78,16 +77,14 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CourseResponse getWithUsers(UUID id) {
-        CourseEntity courseEntity = courseRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(COURSE, id));
+        CourseEntity courseEntity = getEntity(id);
         Hibernate.initialize(courseEntity.getStudents());
         return CourseMapper.toCourseResponse(courseEntity);
     }
 
     @Override
     public CourseResponse getWithSectionsWithPostsAndTests(UUID id) {
-        CourseEntity courseEntity = courseRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(COURSE, id));
+        CourseEntity courseEntity = getEntity(id);
         courseEntity.getSections().forEach(s -> {
             Hibernate.initialize(s.getPosts());
             Hibernate.initialize(s.getTests());
@@ -106,8 +103,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public boolean hasOwnerRights(UUID userUuid, UUID courseUuid) {
-        CourseEntity course = courseRepository.findById(courseUuid)
-                .orElseThrow(() -> new ResourceNotFoundException(COURSE, courseUuid));
+        CourseEntity course = getEntity(courseUuid);
         UUID courseOwner = course.getTeacher().getUuid();
         return courseOwner.equals(userUuid);
     }
@@ -115,20 +111,16 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     public boolean isEnrolled(UUID courseUuid, UUID studentUuid) {
-        CourseEntity courseEntity = courseRepository.findById(courseUuid)
-                .orElseThrow(() -> new ResourceNotFoundException(COURSE, courseUuid));
-        UserEntity userEntity = userRepository.findById(studentUuid)
-            .orElseThrow(() -> new ResourceNotFoundException(USER, studentUuid));
+        CourseEntity courseEntity = getEntity(courseUuid);
+        UserEntity userEntity = userService.getEntity(studentUuid);
         return (courseEntity.getStudents().contains(userEntity));
     }
 
     @Override
     @Transactional
     public void enrollStudent(UUID courseId, UUID studentId) {
-        CourseEntity courseEntity = courseRepository.findById(courseId)
-                .orElseThrow(() -> new ResourceNotFoundException(COURSE, courseId));
-        UserEntity userEntity = userRepository.findById(studentId)
-            .orElseThrow(() -> new ResourceNotFoundException(USER, courseId));
+        CourseEntity courseEntity = getEntity(courseId);
+        UserEntity userEntity = userService.getEntity(studentId);
         if (!courseEntity.getStudents().contains(userEntity)) {
             courseEntity.getStudents().add(userEntity);
         }
@@ -142,10 +134,8 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     public void unrollStudent(UUID courseId, UUID studentId) {
-        CourseEntity courseEntity = courseRepository.findById(courseId)
-            .orElseThrow(() -> new ResourceNotFoundException(COURSE, courseId));
-        UserEntity userEntity = userRepository.findById(studentId)
-            .orElseThrow(() -> new ResourceNotFoundException(USER, courseId));
+        CourseEntity courseEntity = getEntity(courseId);
+        UserEntity userEntity = userService.getEntity(studentId);
         if (courseEntity.getStudents().contains(userEntity))
             courseEntity.getStudents().remove(userEntity);
         else throw new IllegalArgumentException("User is not enrolled to course");

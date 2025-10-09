@@ -30,19 +30,18 @@ public class UserServiceImpl implements UserService {
     private UserValidator userValidator;
 
     @Override
+    public UserEntity getEntity(UUID id) {
+        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", id));
+    }
+
+    @Override
     public List<UserResponse> getAll() {
         return userRepository.findAll().stream().map(UserMapper::toUserResponse).toList();
     }
 
     @Override
     public UserResponse get(UUID id) {
-        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", id));
-        return UserMapper.toUserResponse(userEntity);
-    }
-
-    @Override
-    public UserResponse getResponse(UUID id) {
-        return UserMapper.toUserResponse(userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", id)));
+        return UserMapper.toUserResponse(getEntity(id));
     }
 
     @Override
@@ -55,16 +54,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse update(UserView userView) {
         userValidator.validateForUpdate(userView);
-        UserEntity existingUser = userRepository.findById(userView.getUuid())
-                .orElseThrow(() -> new ResourceNotFoundException("User", userView.getUuid()));
+        UserEntity existingUser = getEntity(userView.getUuid());
         UserEntity userEntity = userRepository.save(UserMapper.toUserEntity(userView, existingUser, passwordEncoder));
         return UserMapper.toUserResponse(userEntity);
     }
 
     @Override
     public void delete(UUID id) {
-        UserEntity userEntity = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User", id));
+        UserEntity userEntity = getEntity(id);
         UserResponse currentUser = getAuthenticatedUser();
 
         if (currentUser.getRole() != UserRole.ADMIN) {
@@ -82,8 +79,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse getWithCourses(UUID userId) {
-        UserEntity userEntity = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User", userId));
+        UserEntity userEntity = getEntity(userId);
         if (userEntity.getRole() == UserRole.STUDENT) {
             Hibernate.initialize(userEntity.getCourses());
         }

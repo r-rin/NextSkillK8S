@@ -1,5 +1,6 @@
 package ukma.springboot.nextskill.course;
 
+import ukma.springboot.nextskill.common.models.entities.CourseEntity;
 import ukma.springboot.nextskill.common.models.responses.CourseResponse;
 import ukma.springboot.nextskill.common.models.views.CourseView;
 
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface CourseService {
+    CourseEntity getEntity(UUID id);
     List<CourseResponse> getAll();
     CourseResponse get(UUID id);
     CourseResponse create(CourseView courseView);
