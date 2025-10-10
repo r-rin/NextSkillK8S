@@ -30,7 +30,6 @@ public class StaticService {
     @Retryable(
         recover = "getJsonRecover",
         retryFor = { RestClientException.class },
-        maxAttempts = 2,
         backoff = @Backoff(delay = 1200, multiplier = 2)
     )
     public Object getJson() {
