@@ -35,6 +35,9 @@ dependencies {
     testImplementation("org.springframework.modulith:spring-modulith-starter-test:1.2.1")
     testImplementation("org.springframework.modulith:spring-modulith-docs:1.2.1")
     testImplementation("com.h2database:h2")
+
+    testImplementation("org.springframework.security:spring-security-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 tasks.bootJar {
