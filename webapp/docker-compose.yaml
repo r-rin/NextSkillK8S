@@ -1,7 +1,7 @@
 version: "3.8"
-name: next-skill-db
+name: next-skill
 services:
-  next-skill-db:
+  postgres:
     image: postgres:13.4
     container_name: next-skill-database
     environment:
@@ -12,6 +12,18 @@ services:
       - "5432:5432"
     volumes:
       - database:/var/lib/postgresql/data
+  activemq:
+    image: apache/activemq-classic:5.18.3
+    container_name: next-skill-message-broker
+    environment:
+      ACTIVEMQ_USERNAME: activemquser
+      ACTIVEMQ_PASSWORD: activemqpassword
+    ports:
+      - "61616:61616" # OpenWire protocol port
+      - "8161:8161"   # ActiveMQ web console port
+    volumes:
+      - activemq-data:/opt/activemq/data
 
 volumes:
   database:
+  activemq-data:
