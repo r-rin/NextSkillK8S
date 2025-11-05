@@ -24,4 +24,9 @@ public class EmailServiceImpl implements EmailService {
         message.setFrom(sender);
         mailSender.send(message);
     }
+
+    @Override
+    public void sendWelcomeEmail(String to) {
+        sendEmail(to, "Welcome to NextSkill", "You was registered to NextSkill!");
+    }
 }

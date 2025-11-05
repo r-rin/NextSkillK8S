@@ -13,9 +13,15 @@ public class EmailListener {
 
     private final EmailService emailService;
 
-    @JmsListener(destination = JmsDestinations.SEND_EMAIL_QUEUE)
-    public void receiveEmail(EmailRequest request) {
-        System.out.println("Received email: " + request);
+    @JmsListener(destination = JmsDestinations.SEND_EMAIL_QUEUE, containerFactory = "queueListenerFactory")
+    public void receiveSendEmailMessage(EmailRequest request) {
+        System.out.println("Received Send Email Message: " + request);
         emailService.sendEmail(request.getTo(), request.getSubject(), request.getText());
+    }
+
+    @JmsListener(destination = JmsDestinations.USER_CREATED_TOPIC, containerFactory = "topicListenerFactory")
+    public void receiveUserCreatedMessage(String userEmail) {
+        System.out.println("Received User Created Message: " + userEmail);
+        emailService.sendWelcomeEmail(userEmail);
     }
 }

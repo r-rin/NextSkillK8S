@@ -1,6 +1,6 @@
 package ukma.springboot.nextskill.email.service;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import ukma.springboot.nextskill.common.dto.views.EmailRequest;
@@ -8,10 +8,13 @@ import ukma.springboot.nextskill.common.messaging.JmsDestinations;
 import ukma.springboot.nextskill.email.EmailService;
 
 @Service
-@RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
 
-    private final JmsTemplate jmsTemplate;
+    private final JmsTemplate queueJmsTemplate;
+
+    public EmailServiceImpl(@Qualifier("jmsQueueTemplate") JmsTemplate jmsTemplate) {
+        this.queueJmsTemplate = jmsTemplate;
+    }
 
     @Override
     public void sendEmail(String to, String subject, String text) {
@@ -22,7 +25,7 @@ public class EmailServiceImpl implements EmailService {
             .build();
 
         try {
-            jmsTemplate.convertAndSend(JmsDestinations.SEND_EMAIL_QUEUE, request);
+            queueJmsTemplate.convertAndSend(JmsDestinations.SEND_EMAIL_QUEUE, request);
             System.out.println("Create send email message: " + request);
         } catch (Exception e) {
             System.out.println("Error sending email: " + e.getMessage());

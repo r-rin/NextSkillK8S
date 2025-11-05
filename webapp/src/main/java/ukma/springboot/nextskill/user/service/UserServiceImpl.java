@@ -1,13 +1,14 @@
 package ukma.springboot.nextskill.user.service;
 
-import lombok.AllArgsConstructor;
 import org.hibernate.Hibernate;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ukma.springboot.nextskill.common.exceptions.NoAccessException;
 import ukma.springboot.nextskill.common.exceptions.ResourceNotFoundException;
+import ukma.springboot.nextskill.common.messaging.JmsDestinations;
 import ukma.springboot.nextskill.common.models.entities.UserEntity;
 import ukma.springboot.nextskill.common.dto.enums.UserRole;
 import ukma.springboot.nextskill.common.models.mappers.UserMapper;
@@ -23,13 +24,24 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
-    private UserValidator userValidator;
-    private JmsTemplate jmsTemplate;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserValidator userValidator;
+    private final JmsTemplate topicJmsTemplate;
+
+    public UserServiceImpl(
+        UserRepository userRepository,
+        PasswordEncoder passwordEncoder,
+        UserValidator userValidator,
+        @Qualifier("jmsTopicTemplate") JmsTemplate jmsTemplate
+    ) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.userValidator = userValidator;
+        this.topicJmsTemplate = jmsTemplate;
+    }
 
     @Override
     public UserEntity getEntity(UUID id) {
@@ -50,6 +62,7 @@ public class UserServiceImpl implements UserService {
     public UserResponse create(UserView userView) {
         userValidator.validateForCreation(userView);
         UserEntity userEntity = userRepository.save(UserMapper.toUserEntity(userView, passwordEncoder));
+        topicJmsTemplate.convertAndSend(JmsDestinations.USER_CREATED_TOPIC, userEntity.getEmail());
         return UserMapper.toUserResponse(userEntity);
     }
 
