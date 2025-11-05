@@ -1,4 +1,4 @@
-package ukma.springboot.nextskill.common.models.views;
+package ukma.springboot.nextskill.common.dto.views;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -12,11 +12,11 @@ import ukma.springboot.nextskill.assessment.QuestionDeletedEvent;
 import ukma.springboot.nextskill.assessment.QuestionService;
 import ukma.springboot.nextskill.assessment.TestService;
 import ukma.springboot.nextskill.common.Constants;
-import ukma.springboot.nextskill.common.models.enums.UserRole;
-import ukma.springboot.nextskill.common.models.responses.QuestionResponse;
-import ukma.springboot.nextskill.common.models.responses.TestResponse;
-import ukma.springboot.nextskill.common.models.responses.UserResponse;
-import ukma.springboot.nextskill.common.models.views.QuestionView;
+import ukma.springboot.nextskill.common.dto.enums.UserRole;
+import ukma.springboot.nextskill.common.dto.responses.QuestionResponse;
+import ukma.springboot.nextskill.common.dto.responses.TestResponse;
+import ukma.springboot.nextskill.common.dto.responses.UserResponse;
+import ukma.springboot.nextskill.common.dto.views.QuestionView;
 import ukma.springboot.nextskill.user.UserService;
 
 import java.util.UUID;

@@ -10,9 +10,9 @@ import ukma.springboot.nextskill.common.exceptions.ResourceNotFoundException;
 import ukma.springboot.nextskill.common.models.entities.CourseEntity;
 import ukma.springboot.nextskill.common.models.entities.TestEntity;
 import ukma.springboot.nextskill.common.models.mappers.TestMapper;
-import ukma.springboot.nextskill.common.models.responses.TestResponse;
-import ukma.springboot.nextskill.common.models.responses.UserResponse;
-import ukma.springboot.nextskill.common.models.views.TestView;
+import ukma.springboot.nextskill.common.dto.responses.TestResponse;
+import ukma.springboot.nextskill.common.dto.responses.UserResponse;
+import ukma.springboot.nextskill.common.dto.views.TestView;
 
 import java.util.List;
 import java.util.UUID;

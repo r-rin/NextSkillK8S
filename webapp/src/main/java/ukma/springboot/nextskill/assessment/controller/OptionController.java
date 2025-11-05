@@ -11,12 +11,12 @@ import ukma.springboot.nextskill.assessment.OptionDeletedEvent;
 import ukma.springboot.nextskill.assessment.OptionService;
 import ukma.springboot.nextskill.assessment.QuestionService;
 import ukma.springboot.nextskill.assessment.TestService;
-import ukma.springboot.nextskill.common.models.enums.UserRole;
-import ukma.springboot.nextskill.common.models.responses.QuestionOptionResponse;
-import ukma.springboot.nextskill.common.models.responses.QuestionResponse;
-import ukma.springboot.nextskill.common.models.responses.TestResponse;
-import ukma.springboot.nextskill.common.models.responses.UserResponse;
-import ukma.springboot.nextskill.common.models.views.QuestionOptionView;
+import ukma.springboot.nextskill.common.dto.enums.UserRole;
+import ukma.springboot.nextskill.common.dto.responses.QuestionOptionResponse;
+import ukma.springboot.nextskill.common.dto.responses.QuestionResponse;
+import ukma.springboot.nextskill.common.dto.responses.TestResponse;
+import ukma.springboot.nextskill.common.dto.responses.UserResponse;
+import ukma.springboot.nextskill.common.dto.views.QuestionOptionView;
 import ukma.springboot.nextskill.user.UserService;
 
 import java.util.UUID;

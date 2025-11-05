@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ukma.springboot.nextskill.common.dto.EmailRequest;
+import ukma.springboot.nextskill.common.dto.views.EmailRequest;
 
 @RestController
 @RequestMapping("/api/email")

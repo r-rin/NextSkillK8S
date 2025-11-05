@@ -1,8 +1,8 @@
 package ukma.springboot.nextskill.assessment;
 
-import ukma.springboot.nextskill.common.models.responses.TestAttemptResponse;
-import ukma.springboot.nextskill.common.models.responses.UserResponse;
-import ukma.springboot.nextskill.common.models.views.TestAttemptView;
+import ukma.springboot.nextskill.common.dto.responses.TestAttemptResponse;
+import ukma.springboot.nextskill.common.dto.responses.UserResponse;
+import ukma.springboot.nextskill.common.dto.views.TestAttemptView;
 
 import java.util.List;
 import java.util.Map;

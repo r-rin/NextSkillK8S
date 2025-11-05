@@ -1,4 +1,4 @@
-package ukma.springboot.nextskill.common.dto;
+package ukma.springboot.nextskill.common.dto.views;
 
 import lombok.Builder;
 import lombok.Data;

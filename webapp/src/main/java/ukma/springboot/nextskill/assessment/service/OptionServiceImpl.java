@@ -7,8 +7,8 @@ import ukma.springboot.nextskill.assessment.repository.OptionRepository;
 import ukma.springboot.nextskill.common.exceptions.ResourceNotFoundException;
 import ukma.springboot.nextskill.common.models.entities.QuestionOptionEntity;
 import ukma.springboot.nextskill.common.models.mappers.QuestionOptionMapper;
-import ukma.springboot.nextskill.common.models.responses.QuestionOptionResponse;
-import ukma.springboot.nextskill.common.models.views.QuestionOptionView;
+import ukma.springboot.nextskill.common.dto.responses.QuestionOptionResponse;
+import ukma.springboot.nextskill.common.dto.views.QuestionOptionView;
 
 import java.util.List;
 import java.util.UUID;

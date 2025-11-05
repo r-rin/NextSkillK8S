@@ -1,4 +1,4 @@
-package ukma.springboot.nextskill.common.models.views;
+package ukma.springboot.nextskill.common.dto.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,17 +6,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TestAttemptView {
+public class TestAttemptResponse {
     private UUID uuid;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private boolean submitted;
-    private UUID completedById;
-    private UUID testId;
+    private UserResponse completedBy;
+    private List<QuestionAnswerResponse> answers;
 }

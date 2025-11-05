@@ -4,8 +4,8 @@ import ukma.springboot.nextskill.common.models.entities.QuestionAnswerEntity;
 import ukma.springboot.nextskill.common.models.entities.QuestionEntity;
 import ukma.springboot.nextskill.common.models.entities.QuestionOptionEntity;
 import ukma.springboot.nextskill.common.models.entities.TestAttemptEntity;
-import ukma.springboot.nextskill.common.models.responses.QuestionAnswerResponse;
-import ukma.springboot.nextskill.common.models.views.QuestionAnswerView;
+import ukma.springboot.nextskill.common.dto.responses.QuestionAnswerResponse;
+import ukma.springboot.nextskill.common.dto.views.QuestionAnswerView;
 
 public class QuestionAnswerMapper {
 

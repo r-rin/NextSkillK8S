@@ -2,8 +2,8 @@ package ukma.springboot.nextskill.common.models.mappers;
 
 import ukma.springboot.nextskill.common.models.entities.PostEntity;
 import ukma.springboot.nextskill.common.models.entities.SectionEntity;
-import ukma.springboot.nextskill.common.models.responses.PostResponse;
-import ukma.springboot.nextskill.common.models.views.PostView;
+import ukma.springboot.nextskill.common.dto.responses.PostResponse;
+import ukma.springboot.nextskill.common.dto.views.PostView;
 
 import static ukma.springboot.nextskill.common.models.mappers.MapperUtility.orElse;
 

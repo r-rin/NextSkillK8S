@@ -6,8 +6,8 @@ import ukma.springboot.nextskill.common.models.entities.SectionEntity;
 import ukma.springboot.nextskill.common.models.entities.UserEntity;
 import ukma.springboot.nextskill.common.models.mappers.SectionMapper;
 import ukma.springboot.nextskill.common.models.mappers.UserMapper;
-import ukma.springboot.nextskill.common.models.responses.CourseResponse;
-import ukma.springboot.nextskill.common.models.views.CourseView;
+import ukma.springboot.nextskill.common.dto.responses.CourseResponse;
+import ukma.springboot.nextskill.common.dto.views.CourseView;
 
 import static ukma.springboot.nextskill.common.models.mappers.MapperUtility.mapIfInitialized;
 import static ukma.springboot.nextskill.common.models.mappers.MapperUtility.orElse;

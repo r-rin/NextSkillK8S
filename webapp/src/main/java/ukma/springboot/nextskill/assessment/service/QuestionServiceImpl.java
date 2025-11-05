@@ -8,8 +8,8 @@ import ukma.springboot.nextskill.assessment.repository.QuestionRepository;
 import ukma.springboot.nextskill.common.exceptions.ResourceNotFoundException;
 import ukma.springboot.nextskill.common.models.entities.QuestionEntity;
 import ukma.springboot.nextskill.common.models.mappers.QuestionMapper;
-import ukma.springboot.nextskill.common.models.responses.QuestionResponse;
-import ukma.springboot.nextskill.common.models.views.QuestionView;
+import ukma.springboot.nextskill.common.dto.responses.QuestionResponse;
+import ukma.springboot.nextskill.common.dto.views.QuestionView;
 
 import java.util.List;
 import java.util.UUID;

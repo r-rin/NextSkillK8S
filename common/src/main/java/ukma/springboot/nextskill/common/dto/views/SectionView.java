@@ -1,4 +1,4 @@
-package ukma.springboot.nextskill.common.models.views;
+package ukma.springboot.nextskill.common.dto.views;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +13,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CourseView {
+public class SectionView {
 
     private UUID uuid;
 
@@ -22,6 +22,6 @@ public class CourseView {
 
     private String description;
 
-    @NotNull(message = "Course cannot exist without teacher")
-    private UUID teacherId;
+    @NotNull(message = "Section cannot exist without course")
+    private UUID courseId;
 }

@@ -3,7 +3,7 @@ package ukma.springboot.nextskill.listener;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
-import ukma.springboot.nextskill.common.dto.EmailRequest;
+import ukma.springboot.nextskill.common.dto.views.EmailRequest;
 import ukma.springboot.nextskill.service.EmailService;
 
 @Component

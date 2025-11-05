@@ -2,8 +2,8 @@ package ukma.springboot.nextskill.common.models.mappers;
 
 import ukma.springboot.nextskill.common.models.entities.QuestionEntity;
 import ukma.springboot.nextskill.common.models.entities.QuestionOptionEntity;
-import ukma.springboot.nextskill.common.models.responses.QuestionOptionResponse;
-import ukma.springboot.nextskill.common.models.views.QuestionOptionView;
+import ukma.springboot.nextskill.common.dto.responses.QuestionOptionResponse;
+import ukma.springboot.nextskill.common.dto.views.QuestionOptionView;
 
 public class QuestionOptionMapper {
 

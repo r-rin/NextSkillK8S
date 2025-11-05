@@ -2,8 +2,8 @@ package ukma.springboot.nextskill.common.models.mappers;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ukma.springboot.nextskill.common.models.entities.UserEntity;
-import ukma.springboot.nextskill.common.models.responses.UserResponse;
-import ukma.springboot.nextskill.common.models.views.UserView;
+import ukma.springboot.nextskill.common.dto.responses.UserResponse;
+import ukma.springboot.nextskill.common.dto.views.UserView;
 import ukma.springboot.nextskill.course.mapper.CourseMapper;
 
 import static ukma.springboot.nextskill.common.models.mappers.MapperUtility.mapIfInitialized;

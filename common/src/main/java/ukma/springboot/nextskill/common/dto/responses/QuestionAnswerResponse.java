@@ -1,4 +1,4 @@
-package ukma.springboot.nextskill.common.models.views;
+package ukma.springboot.nextskill.common.dto.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +11,8 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class QuestionView {
+public class QuestionAnswerResponse {
     private UUID id;
-    private String questionText;
-    private UUID testId;
+    private QuestionResponse question;
+    private QuestionOptionResponse answerOption;
 }

@@ -1,4 +1,4 @@
-package ukma.springboot.nextskill.common.models.responses;
+package ukma.springboot.nextskill.common.dto.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,12 +13,13 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CourseResponse {
+public class TestResponse {
     private UUID uuid;
     private String name;
     private String description;
     private LocalDateTime createdAt;
-    private UserResponse teacher;
-    private List<UserResponse> students;
-    private List<SectionResponse> sections;
+    private boolean isHidden;
+    private List<QuestionResponse> questions;
+    private List<TestAttemptResponse> attempts;
+    private SectionResponse section;
 }

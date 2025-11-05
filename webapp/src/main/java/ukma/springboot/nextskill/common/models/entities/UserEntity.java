@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import ukma.springboot.nextskill.common.models.enums.UserRole;
+import ukma.springboot.nextskill.common.dto.enums.UserRole;
 
 import java.time.LocalDateTime;
 import java.util.List;

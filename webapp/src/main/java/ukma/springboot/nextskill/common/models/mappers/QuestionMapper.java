@@ -2,8 +2,8 @@ package ukma.springboot.nextskill.common.models.mappers;
 
 import ukma.springboot.nextskill.common.models.entities.QuestionEntity;
 import ukma.springboot.nextskill.common.models.entities.TestEntity;
-import ukma.springboot.nextskill.common.models.responses.QuestionResponse;
-import ukma.springboot.nextskill.common.models.views.QuestionView;
+import ukma.springboot.nextskill.common.dto.responses.QuestionResponse;
+import ukma.springboot.nextskill.common.dto.views.QuestionView;
 
 public class QuestionMapper {
 

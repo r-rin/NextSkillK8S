@@ -1,12 +1,11 @@
-package ukma.springboot.nextskill.common.models.views;
+package ukma.springboot.nextskill.common.dto.views;
 
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ukma.springboot.nextskill.common.models.enums.UserRole;
-import ukma.springboot.nextskill.user.validation.constraints.ConfirmPassword;
+import ukma.springboot.nextskill.common.dto.enums.UserRole;
 
 import java.util.UUID;
 
@@ -14,7 +13,6 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ConfirmPassword
 public class UserView {
 
     private UUID uuid;

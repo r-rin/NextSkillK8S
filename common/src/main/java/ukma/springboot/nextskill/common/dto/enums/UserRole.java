@@ -1,4 +1,4 @@
-package ukma.springboot.nextskill.common.models.enums;
+package ukma.springboot.nextskill.common.dto.enums;
 
 public enum UserRole {
     STUDENT,

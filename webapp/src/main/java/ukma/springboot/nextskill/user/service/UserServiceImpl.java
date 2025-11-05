@@ -2,17 +2,18 @@ package ukma.springboot.nextskill.user.service;
 
 import lombok.AllArgsConstructor;
 import org.hibernate.Hibernate;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ukma.springboot.nextskill.common.exceptions.NoAccessException;
 import ukma.springboot.nextskill.common.exceptions.ResourceNotFoundException;
 import ukma.springboot.nextskill.common.models.entities.UserEntity;
-import ukma.springboot.nextskill.common.models.enums.UserRole;
+import ukma.springboot.nextskill.common.dto.enums.UserRole;
 import ukma.springboot.nextskill.common.models.mappers.UserMapper;
-import ukma.springboot.nextskill.common.models.responses.CourseResponse;
-import ukma.springboot.nextskill.common.models.responses.UserResponse;
-import ukma.springboot.nextskill.common.models.views.UserView;
+import ukma.springboot.nextskill.common.dto.responses.CourseResponse;
+import ukma.springboot.nextskill.common.dto.responses.UserResponse;
+import ukma.springboot.nextskill.common.dto.views.UserView;
 import ukma.springboot.nextskill.user.UserService;
 import ukma.springboot.nextskill.user.repository.UserRepository;
 import ukma.springboot.nextskill.user.validation.UserValidator;
@@ -28,6 +29,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private UserValidator userValidator;
+    private JmsTemplate jmsTemplate;
 
     @Override
     public UserEntity getEntity(UUID id) {

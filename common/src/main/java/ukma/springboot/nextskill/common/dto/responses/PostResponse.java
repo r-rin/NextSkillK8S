@@ -1,4 +1,4 @@
-package ukma.springboot.nextskill.common.models.responses;
+package ukma.springboot.nextskill.common.dto.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

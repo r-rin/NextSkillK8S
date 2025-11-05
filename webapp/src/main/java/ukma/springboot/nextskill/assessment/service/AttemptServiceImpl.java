@@ -13,11 +13,11 @@ import ukma.springboot.nextskill.common.models.entities.TestAttemptEntity;
 import ukma.springboot.nextskill.common.models.entities.TestEntity;
 import ukma.springboot.nextskill.common.models.entities.UserEntity;
 import ukma.springboot.nextskill.common.models.mappers.TestAttemptMapper;
-import ukma.springboot.nextskill.common.models.responses.CourseResponse;
-import ukma.springboot.nextskill.common.models.responses.TestAttemptResponse;
-import ukma.springboot.nextskill.common.models.responses.TestResponse;
-import ukma.springboot.nextskill.common.models.responses.UserResponse;
-import ukma.springboot.nextskill.common.models.views.TestAttemptView;
+import ukma.springboot.nextskill.common.dto.responses.CourseResponse;
+import ukma.springboot.nextskill.common.dto.responses.TestAttemptResponse;
+import ukma.springboot.nextskill.common.dto.responses.TestResponse;
+import ukma.springboot.nextskill.common.dto.responses.UserResponse;
+import ukma.springboot.nextskill.common.dto.views.TestAttemptView;
 
 import java.time.LocalDateTime;
 import java.util.List;

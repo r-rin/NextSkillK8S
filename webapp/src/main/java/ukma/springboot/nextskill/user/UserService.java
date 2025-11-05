@@ -1,9 +1,9 @@
 package ukma.springboot.nextskill.user;
 
 import ukma.springboot.nextskill.common.models.entities.UserEntity;
-import ukma.springboot.nextskill.common.models.responses.CourseResponse;
-import ukma.springboot.nextskill.common.models.responses.UserResponse;
-import ukma.springboot.nextskill.common.models.views.UserView;
+import ukma.springboot.nextskill.common.dto.responses.CourseResponse;
+import ukma.springboot.nextskill.common.dto.responses.UserResponse;
+import ukma.springboot.nextskill.common.dto.views.UserView;
 
 import java.util.List;
 import java.util.UUID;

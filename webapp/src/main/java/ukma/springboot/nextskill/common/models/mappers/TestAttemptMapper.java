@@ -3,8 +3,8 @@ package ukma.springboot.nextskill.common.models.mappers;
 import ukma.springboot.nextskill.common.models.entities.TestAttemptEntity;
 import ukma.springboot.nextskill.common.models.entities.TestEntity;
 import ukma.springboot.nextskill.common.models.entities.UserEntity;
-import ukma.springboot.nextskill.common.models.responses.TestAttemptResponse;
-import ukma.springboot.nextskill.common.models.views.TestAttemptView;
+import ukma.springboot.nextskill.common.dto.responses.TestAttemptResponse;
+import ukma.springboot.nextskill.common.dto.views.TestAttemptView;
 
 public class TestAttemptMapper {
 

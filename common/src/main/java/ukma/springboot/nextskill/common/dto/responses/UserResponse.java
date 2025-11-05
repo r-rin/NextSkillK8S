@@ -1,11 +1,12 @@
-package ukma.springboot.nextskill.common.models.responses;
+package ukma.springboot.nextskill.common.dto.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ukma.springboot.nextskill.common.models.enums.UserRole;
+import ukma.springboot.nextskill.common.dto.enums.UserRole;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -14,7 +15,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserResponse {
+public class UserResponse implements Serializable {
     private UUID uuid;
     private String username;
     private String name;

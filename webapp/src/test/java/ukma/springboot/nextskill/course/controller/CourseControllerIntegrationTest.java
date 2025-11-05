@@ -2,7 +2,6 @@ package ukma.springboot.nextskill.course.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,8 +11,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import ukma.springboot.nextskill.common.models.responses.CourseResponse;
-import ukma.springboot.nextskill.common.models.responses.UserResponse;
+import ukma.springboot.nextskill.common.dto.responses.CourseResponse;
+import ukma.springboot.nextskill.common.dto.responses.UserResponse;
 import ukma.springboot.nextskill.course.CourseService;
 import ukma.springboot.nextskill.user.UserService;
 

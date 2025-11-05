@@ -1,8 +1,8 @@
 package ukma.springboot.nextskill.course;
 
 import ukma.springboot.nextskill.common.models.entities.CourseEntity;
-import ukma.springboot.nextskill.common.models.responses.CourseResponse;
-import ukma.springboot.nextskill.common.models.views.CourseView;
+import ukma.springboot.nextskill.common.dto.responses.CourseResponse;
+import ukma.springboot.nextskill.common.dto.views.CourseView;
 
 import java.util.List;
 import java.util.UUID;

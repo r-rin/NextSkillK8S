@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import ukma.springboot.nextskill.common.models.views.UserView;
+import ukma.springboot.nextskill.common.dto.views.UserView;
 import ukma.springboot.nextskill.user.UserService;
 
 @Controller

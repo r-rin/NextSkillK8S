@@ -2,8 +2,8 @@ package ukma.springboot.nextskill.common.models.mappers;
 
 import ukma.springboot.nextskill.common.models.entities.CourseEntity;
 import ukma.springboot.nextskill.common.models.entities.SectionEntity;
-import ukma.springboot.nextskill.common.models.responses.SectionResponse;
-import ukma.springboot.nextskill.common.models.views.SectionView;
+import ukma.springboot.nextskill.common.dto.responses.SectionResponse;
+import ukma.springboot.nextskill.common.dto.views.SectionView;
 import ukma.springboot.nextskill.course.mapper.CourseMapper;
 
 import static ukma.springboot.nextskill.common.models.mappers.MapperUtility.mapIfInitialized;
