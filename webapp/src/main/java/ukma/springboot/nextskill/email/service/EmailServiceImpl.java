@@ -3,7 +3,7 @@ package ukma.springboot.nextskill.email.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
-import ukma.springboot.nextskill.dto.EmailRequest;
+import ukma.springboot.nextskill.common.dto.EmailRequest;
 import ukma.springboot.nextskill.email.EmailService;
 
 @Service
