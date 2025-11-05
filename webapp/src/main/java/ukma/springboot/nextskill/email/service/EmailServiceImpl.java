@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import ukma.springboot.nextskill.common.dto.views.EmailRequest;
+import ukma.springboot.nextskill.common.messaging.JmsDestinations;
 import ukma.springboot.nextskill.email.EmailService;
 
 @Service
@@ -21,7 +22,8 @@ public class EmailServiceImpl implements EmailService {
             .build();
 
         try {
-            jmsTemplate.convertAndSend("sendEmailQueue", request);
+            jmsTemplate.convertAndSend(JmsDestinations.SEND_EMAIL_QUEUE, request);
+            System.out.println("Create send email message: " + request);
         } catch (Exception e) {
             System.out.println("Error sending email: " + e.getMessage());
         }

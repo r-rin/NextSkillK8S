@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 import ukma.springboot.nextskill.common.dto.views.EmailRequest;
+import ukma.springboot.nextskill.common.messaging.JmsDestinations;
 import ukma.springboot.nextskill.service.EmailService;
 
 @Component
@@ -12,7 +13,7 @@ public class EmailListener {
 
     private final EmailService emailService;
 
-    @JmsListener(destination = "sendEmailQueue")
+    @JmsListener(destination = JmsDestinations.SEND_EMAIL_QUEUE)
     public void receiveEmail(EmailRequest request) {
         System.out.println("Received email: " + request);
         emailService.sendEmail(request.getTo(), request.getSubject(), request.getText());
