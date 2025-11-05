@@ -2,7 +2,6 @@ package ukma.springboot.nextskill.course.service;
 
 import lombok.AllArgsConstructor;
 import org.hibernate.Hibernate;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ukma.springboot.nextskill.common.exceptions.NoAccessException;
@@ -17,7 +16,7 @@ import ukma.springboot.nextskill.course.CourseService;
 import ukma.springboot.nextskill.course.mapper.CourseMapper;
 import ukma.springboot.nextskill.course.repository.CourseRepository;
 import ukma.springboot.nextskill.course.validation.CourseValidator;
-import ukma.springboot.nextskill.email.EmailSendEvent;
+import ukma.springboot.nextskill.email.EmailService;
 import ukma.springboot.nextskill.user.UserService;
 
 import java.util.List;
@@ -31,7 +30,7 @@ public class CourseServiceImpl implements CourseService {
     private CourseRepository courseRepository;
     private UserService userService;
     private CourseValidator courseValidator;
-    private ApplicationEventPublisher eventPublisher;
+    private EmailService emailService;
 
     @Override
     public CourseEntity getEntity(UUID id) {
@@ -127,8 +126,8 @@ public class CourseServiceImpl implements CourseService {
         else throw new IllegalArgumentException("User is already enrolled to course");
         courseRepository.save(courseEntity);
 
-        eventPublisher.publishEvent(new EmailSendEvent(this, userEntity.getEmail(),
-                "Enrolling to new course", "You have been enrolled to new course: \"" + courseEntity.getName() + "\""));
+        emailService.sendEmail(userEntity.getEmail(), "Enrolling to new course",
+            "You have been enrolled to new course: \"" + courseEntity.getName() + "\"");
     }
 
     @Override
@@ -141,7 +140,7 @@ public class CourseServiceImpl implements CourseService {
         else throw new IllegalArgumentException("User is not enrolled to course");
         courseRepository.save(courseEntity);
 
-        eventPublisher.publishEvent(new EmailSendEvent(this, userEntity.getEmail(),
-                "Unrolling from course", "You have been unrolled from course: \"" + courseEntity.getName() + "\""));
+        emailService.sendEmail(userEntity.getEmail(), "Unrolling from course",
+            "You have been unrolled from course: \"" + courseEntity.getName() + "\"");
     }
 }
