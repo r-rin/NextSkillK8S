@@ -126,7 +126,7 @@ public class CourseServiceImpl implements CourseService {
         else throw new IllegalArgumentException("User is already enrolled to course");
         courseRepository.save(courseEntity);
 
-        emailService.sendEmail(userEntity.getEmail(), "Enrolling to new course",
+        emailService.sendHighPriorityEmail(userEntity.getEmail(), "Enrolling to new course",
             "You have been enrolled to new course: \"" + courseEntity.getName() + "\"");
     }
 
@@ -140,7 +140,7 @@ public class CourseServiceImpl implements CourseService {
         else throw new IllegalArgumentException("User is not enrolled to course");
         courseRepository.save(courseEntity);
 
-        emailService.sendEmail(userEntity.getEmail(), "Unrolling from course",
+        emailService.sendLowPriorityEmail(userEntity.getEmail(), "Unrolling from course",
             "You have been unrolled from course: \"" + courseEntity.getName() + "\"");
     }
 }

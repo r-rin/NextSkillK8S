@@ -17,7 +17,16 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendEmail(String to, String subject, String text) {
+    public void sendHighPriorityEmail(String to, String subject, String text) {
+        sendEmail(to, subject, text, "HIGH");
+    }
+
+    @Override
+    public void sendLowPriorityEmail(String to, String subject, String text) {
+        sendEmail(to, subject, text, "LOW");
+    }
+
+    public void sendEmail(String to, String subject, String text, String emailPriority) {
         var request = EmailRequest.builder()
             .subject(subject)
             .text(text)
@@ -25,7 +34,10 @@ public class EmailServiceImpl implements EmailService {
             .build();
 
         try {
-            queueJmsTemplate.convertAndSend(JmsDestinations.SEND_EMAIL_QUEUE, request);
+            queueJmsTemplate.convertAndSend(JmsDestinations.SEND_EMAIL_QUEUE, request, message -> {
+                message.setStringProperty("emailPriority", emailPriority);
+                return message;
+            });
             System.out.println("Create send email message: " + request);
         } catch (Exception e) {
             System.out.println("Error sending email: " + e.getMessage());
