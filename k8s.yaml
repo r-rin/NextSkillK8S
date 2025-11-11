@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: email-service
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: email-service
@@ -16,8 +16,21 @@ spec:
         - name: email-service
           image: nextskill-email-service:local
           imagePullPolicy: IfNotPresent
+          env:
+            - name: SPRING_ACTIVEMQ_BROKER_URL
+              value: tcp://activemq:61616
+            - name: SPRING_ACTIVEMQ_USER
+              valueFrom:
+                secretKeyRef:
+                  name: activemq-secret
+                  key: ACTIVEMQ_USER
+            - name: SPRING_ACTIVEMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: activemq-secret
+                  key: ACTIVEMQ_PASSWORD
           ports:
-            - containerPort: 8080
+            - containerPort: 8081
 ---
 apiVersion: v1
 kind: Service
@@ -28,8 +41,8 @@ spec:
     app: email-service
   ports:
     - protocol: TCP
-      port: 8080
-      targetPort: 8080
+      port: 8081
+      targetPort: 8081
   type: ClusterIP
 ---
 apiVersion: apps/v1
@@ -37,7 +50,7 @@ kind: Deployment
 metadata:
   name: webapp
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: webapp
@@ -60,6 +73,18 @@ spec:
                 secretKeyRef:
                   name: postgres-secret
                   key: POSTGRES_PASSWORD
+            - name: SPRING_ACTIVEMQ_BROKER_URL
+              value: tcp://activemq:61616
+            - name: SPRING_ACTIVEMQ_USER
+              valueFrom:
+                secretKeyRef:
+                  name: activemq-secret
+                  key: ACTIVEMQ_USER
+            - name: SPRING_ACTIVEMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: activemq-secret
+                  key: ACTIVEMQ_PASSWORD
           ports:
             - containerPort: 8080
 ---
@@ -132,4 +157,75 @@ spec:
       port: 5432
       targetPort: 5432
   type: ClusterIP
-
+---
+# ActiveMQ credentials secret
+apiVersion: v1
+kind: Secret
+metadata:
+  name: activemq-secret
+stringData:
+  ACTIVEMQ_USER: activemquser
+  ACTIVEMQ_PASSWORD: activemqpassword
+---
+# ActiveMQ Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: activemq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: activemq
+  template:
+    metadata:
+      labels:
+        app: activemq
+    spec:
+      containers:
+        - name: activemq
+          image: rmohr/activemq:5.15.9-alpine
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: ACTIVEMQ_USER
+              valueFrom:
+                secretKeyRef:
+                  name: activemq-secret
+                  key: ACTIVEMQ_USER
+            - name: ACTIVEMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: activemq-secret
+                  key: ACTIVEMQ_PASSWORD
+          ports:
+            - containerPort: 61616
+            - containerPort: 8161
+          readinessProbe:
+            tcpSocket:
+              port: 61616
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 61616
+            initialDelaySeconds: 30
+            periodSeconds: 30
+---
+# ActiveMQ Service (internal broker access)
+apiVersion: v1
+kind: Service
+metadata:
+  name: activemq
+spec:
+  selector:
+    app: activemq
+  ports:
+    - name: broker
+      protocol: TCP
+      port: 61616
+      targetPort: 61616
+    - name: console
+      protocol: TCP
+      port: 8161
+      targetPort: 8161
+  type: ClusterIP
