@@ -25,6 +25,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.30")
 
     implementation("org.springframework.boot:spring-boot-starter-actuator:3.5.7")
+    implementation("de.codecentric:spring-boot-admin-starter-client:3.5.6")
 }
 
 tasks.bootJar {

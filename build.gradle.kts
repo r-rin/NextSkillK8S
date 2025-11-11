@@ -18,6 +18,12 @@ subprojects {
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
 
+    dependencyManagement {
+        imports {
+            mavenBom("de.codecentric:spring-boot-admin-dependencies:3.3.2")
+        }
+    }
+
     dependencies {
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testRuntimeOnly("org.junit.platform:junit-platform-launcher")
