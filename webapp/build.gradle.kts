@@ -44,6 +44,7 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("de.codecentric:spring-boot-admin-starter-client")
+    implementation("io.micrometer:micrometer-registry-prometheus:1.16.0")
 }
 
 tasks.bootJar {
