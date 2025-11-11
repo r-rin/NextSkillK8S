@@ -41,6 +41,8 @@ dependencies {
 
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    implementation("org.springframework.boot:spring-boot-starter-actuator:3.5.7")
 }
 
 tasks.bootJar {
