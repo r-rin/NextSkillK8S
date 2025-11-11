@@ -33,11 +33,20 @@ public class EmailListener {
     }
 
     @JmsListener(
-        destination = JmsDestinations.USER_CREATED_TOPIC,
-        containerFactory = "topicListenerFactory"
+        destination = JmsDestinations.USER_CREATED_EMAIL_SERVICE_QUEUE,
+        containerFactory = "queueListenerFactory"
     )
     public void receiveUserCreatedMessage(String userEmail) {
         System.out.println("Received User Created Message: " + userEmail);
         emailService.sendWelcomeEmail(userEmail);
     }
+
+//    @JmsListener(
+//        destination = JmsDestinations.USER_CREATED_TOPIC,
+//        containerFactory = "topicListenerFactory"
+//    )
+//    public void receiveUserCreatedMessage(String userEmail) {
+//        System.out.println("Received User Created Message: " + userEmail);
+//        emailService.sendWelcomeEmail(userEmail);
+//    }
 }
