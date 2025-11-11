@@ -39,7 +39,8 @@ public class SecurityConfiguration {
                         .requestMatchers("/actuator/health").permitAll()
                         .requestMatchers("/actuator").permitAll()
                         .requestMatchers("/actuator/**")
-                            .hasAuthority("ROLE_ADMIN")
+                            //.hasAuthority("ROLE_ADMIN")
+                            .permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
