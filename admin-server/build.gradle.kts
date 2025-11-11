@@ -7,3 +7,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-security")
 }
+
+tasks.bootJar {
+    archiveFileName.set("NextSkill-springboot-admin-service.jar")
+}

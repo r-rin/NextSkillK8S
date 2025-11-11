@@ -29,6 +29,23 @@ spec:
                 secretKeyRef:
                   name: activemq-secret
                   key: ACTIVEMQ_PASSWORD
+            - name: SPRING_BOOT_ADMIN_CLIENT_URL
+              value: http://admin-server:8082
+            - name: SPRING_BOOT_ADMIN_CLIENT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: admin-server-secret
+                  key: ADMIN_USERNAME
+            - name: SPRING_BOOT_ADMIN_CLIENT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: admin-server-secret
+                  key: ADMIN_PASSWORD
+            # Explicit base URLs so SBA can reach this service inside the cluster
+            - name: SPRING_BOOT_ADMIN_CLIENT_INSTANCE_SERVICE_BASE_URL
+              value: http://email-service:8081
+            - name: SPRING_BOOT_ADMIN_CLIENT_INSTANCE_MANAGEMENT_BASE_URL
+              value: http://email-service:8081
           ports:
             - containerPort: 8081
 ---
@@ -85,6 +102,23 @@ spec:
                 secretKeyRef:
                   name: activemq-secret
                   key: ACTIVEMQ_PASSWORD
+            - name: SPRING_BOOT_ADMIN_CLIENT_URL
+              value: http://admin-server:8082
+            - name: SPRING_BOOT_ADMIN_CLIENT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: admin-server-secret
+                  key: ADMIN_USERNAME
+            - name: SPRING_BOOT_ADMIN_CLIENT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: admin-server-secret
+                  key: ADMIN_PASSWORD
+            # Explicit base URLs so SBA can reach this service inside the cluster
+            - name: SPRING_BOOT_ADMIN_CLIENT_INSTANCE_SERVICE_BASE_URL
+              value: http://webapp:8080
+            - name: SPRING_BOOT_ADMIN_CLIENT_INSTANCE_MANAGEMENT_BASE_URL
+              value: http://webapp:8080
           ports:
             - containerPort: 8080
 ---
@@ -228,4 +262,59 @@ spec:
       protocol: TCP
       port: 8161
       targetPort: 8161
+  type: ClusterIP
+---
+# Spring Boot Admin server credentials secret
+apiVersion: v1
+kind: Secret
+metadata:
+  name: admin-server-secret
+stringData:
+  ADMIN_USERNAME: admin
+  ADMIN_PASSWORD: password
+---
+# Spring Boot Admin Server Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: admin-server
+  template:
+    metadata:
+      labels:
+        app: admin-server
+    spec:
+      containers:
+        - name: admin-server
+          image: nextskill-admin-server:local
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: SPRING_SECURITY_USER_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: admin-server-secret
+                  key: ADMIN_USERNAME
+            - name: SPRING_SECURITY_USER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: admin-server-secret
+                  key: ADMIN_PASSWORD
+          ports:
+            - containerPort: 8082
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-server
+spec:
+  selector:
+    app: admin-server
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 8082
   type: ClusterIP
