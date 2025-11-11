@@ -1,0 +1,105 @@
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_DB: nextskilldb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - nextskill
+
+  activemq:
+    image: rmohr/activemq:5.15.9-alpine
+    container_name: activemq
+    environment:
+      ACTIVEMQ_USER: activemquser
+      ACTIVEMQ_PASSWORD: activemqpassword
+    ports:
+      - "61616:61616"   # broker
+      - "8161:8161"     # web console
+    networks:
+      - nextskill
+
+  admin-server:
+    build:
+      context: .
+      dockerfile: admin-server/Dockerfile
+    image: nextskill-admin-server:local
+    container_name: admin-server
+    environment:
+      SPRING_SECURITY_USER_NAME: admin
+      SPRING_SECURITY_USER_PASSWORD: password
+      SERVER_PORT: 8082
+    ports:
+      - "8082:8082"
+    depends_on:
+      - activemq
+    networks:
+      - nextskill
+
+  email-service:
+    build:
+      context: .
+      dockerfile: email-service/Dockerfile
+    image: nextskill-email-service:local
+    container_name: email-service
+    environment:
+      SPRING_ACTIVEMQ_BROKER_URL: tcp://activemq:61616
+      SPRING_ACTIVEMQ_USER: activemquser
+      SPRING_ACTIVEMQ_PASSWORD: activemqpassword
+      SPRING_BOOT_ADMIN_CLIENT_URL: http://admin-server:8082
+      SPRING_BOOT_ADMIN_CLIENT_USERNAME: admin
+      SPRING_BOOT_ADMIN_CLIENT_PASSWORD: password
+      SPRING_BOOT_ADMIN_CLIENT_INSTANCE_SERVICE_BASE_URL: http://email-service:8081
+      SPRING_BOOT_ADMIN_CLIENT_INSTANCE_MANAGEMENT_BASE_URL: http://email-service:8081
+      SERVER_PORT: 8081
+    ports:
+      - "8081:8081"
+    depends_on:
+      - activemq
+      - admin-server
+    networks:
+      - nextskill
+
+  webapp:
+    build:
+      context: .
+      dockerfile: webapp/Dockerfile
+    image: nextskill-webapp:local
+    container_name: webapp
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/nextskilldb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgrespassword
+      SPRING_ACTIVEMQ_BROKER_URL: tcp://activemq:61616
+      SPRING_ACTIVEMQ_USER: activemquser
+      SPRING_ACTIVEMQ_PASSWORD: activemqpassword
+      SPRING_BOOT_ADMIN_CLIENT_URL: http://admin-server:8082
+      SPRING_BOOT_ADMIN_CLIENT_USERNAME: admin
+      SPRING_BOOT_ADMIN_CLIENT_PASSWORD: password
+      SPRING_BOOT_ADMIN_CLIENT_INSTANCE_SERVICE_BASE_URL: http://webapp:8080
+      SPRING_BOOT_ADMIN_CLIENT_INSTANCE_MANAGEMENT_BASE_URL: http://webapp:8080
+      SERVER_PORT: 8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - activemq
+      - admin-server
+    networks:
+      - nextskill
+
+networks:
+  nextskill:
+    name: nextskill
+    driver: bridge
+
+volumes:
+  postgres-data:
+    name: postgres-data
+
