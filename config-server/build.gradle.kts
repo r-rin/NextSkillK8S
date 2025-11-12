@@ -9,5 +9,5 @@ dependencies {
 }
 
 tasks.bootJar {
-    archiveFileName.set("NextSkill-springboot-config-service.jar")
+    archiveFileName.set("NextSkill-config-service.jar")
 }
