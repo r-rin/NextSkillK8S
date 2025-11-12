@@ -41,7 +41,7 @@ dependencies {
     implementation("de.codecentric:spring-boot-admin-starter-client")
     implementation("io.micrometer:micrometer-registry-prometheus:1.16.0")
 
-    //implementation("org.springframework.cloud:spring-cloud-starter-config")
+    implementation("org.springframework.cloud:spring-cloud-starter-config")
 }
 
 tasks.bootJar {

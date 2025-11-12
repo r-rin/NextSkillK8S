@@ -14,10 +14,10 @@ import java.util.Date;
 @Component
 public class JWTUtility {
 
-    @Value("${SECRET_KEY}")
+    @Value("${jwt.secret-key}")
     private String secretKey;
 
-    @Value("${TOKEN_EXPIRATION}")
+    @Value("${jwt.token.expiration}")
     private long expirationTime;
 
     public String getToken(String username, Collection<? extends GrantedAuthority> authorities) {
