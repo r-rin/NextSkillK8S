@@ -34,6 +34,8 @@ public class WebSecurityConfig {
                         .permitAll()
                         .requestMatchers(this.adminServer.getContextPath() + "/login")
                         .permitAll()
+                        .requestMatchers("/actuator/**")
+                        .permitAll()
                         .anyRequest()
                         .authenticated())
                 .formLogin(formLogin -> formLogin.loginPage(this.adminServer.getContextPath() + "/login")
