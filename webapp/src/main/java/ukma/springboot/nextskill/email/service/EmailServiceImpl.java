@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import ukma.springboot.nextskill.common.dto.views.EmailRequest;
-import ukma.springboot.nextskill.common.messaging.JmsDestinations;
+import ukma.springboot.nextskill.common.communication.JmsDestinations;
 import ukma.springboot.nextskill.email.EmailService;
 
 @Service

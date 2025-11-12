@@ -8,7 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ukma.springboot.nextskill.common.exceptions.NoAccessException;
 import ukma.springboot.nextskill.common.exceptions.ResourceNotFoundException;
-import ukma.springboot.nextskill.common.messaging.JmsDestinations;
+import ukma.springboot.nextskill.common.communication.JmsDestinations;
 import ukma.springboot.nextskill.common.models.entities.UserEntity;
 import ukma.springboot.nextskill.common.dto.enums.UserRole;
 import ukma.springboot.nextskill.common.models.mappers.UserMapper;

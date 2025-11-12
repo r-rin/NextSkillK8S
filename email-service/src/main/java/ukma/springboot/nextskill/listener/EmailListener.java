@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 import ukma.springboot.nextskill.common.dto.views.EmailRequest;
-import ukma.springboot.nextskill.common.messaging.JmsDestinations;
+import ukma.springboot.nextskill.common.communication.JmsDestinations;
 import ukma.springboot.nextskill.service.EmailService;
 
 @Component

@@ -1,4 +1,4 @@
-package ukma.springboot.nextskill.common.messaging;
+package ukma.springboot.nextskill.common.communication;
 
 public final class JmsDestinations {
     private JmsDestinations() {}
