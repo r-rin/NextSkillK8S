@@ -1,12 +1,7 @@
 plugins {
     id("java")
-}
-
-group = "ukma.springboot.nextskill"
-version = "1.0-SNAPSHOT"
-
-repositories {
-    mavenCentral()
+    id("org.springframework.boot")
+    id("io.spring.dependency-management")
 }
 
 dependencies {
@@ -45,12 +40,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("de.codecentric:spring-boot-admin-starter-client")
     implementation("io.micrometer:micrometer-registry-prometheus:1.16.0")
+
+    //implementation("org.springframework.cloud:spring-cloud-starter-config")
 }
 
 tasks.bootJar {
     archiveFileName.set("NextSkill-webapp.jar")
-}
-
-tasks.test {
-    useJUnitPlatform()
 }

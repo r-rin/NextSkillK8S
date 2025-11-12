@@ -1,5 +1,5 @@
 plugins {
-    java
+    id("java")
     id("org.springframework.boot") version "3.3.5"
     id("io.spring.dependency-management") version "1.1.6"
 }
@@ -15,12 +15,19 @@ allprojects {
 
 subprojects {
     apply(plugin = "java")
-    apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
+
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(21))
+        }
+    }
 
     dependencyManagement {
         imports {
-            mavenBom("de.codecentric:spring-boot-admin-dependencies:3.3.2")
+            mavenBom("org.springframework.boot:spring-boot-dependencies:3.3.5")
+            mavenBom("org.springframework.cloud:spring-cloud-dependencies:2024.0.0")
+            mavenBom("de.codecentric:spring-boot-admin-dependencies:3.3.5")
         }
     }
 
@@ -28,8 +35,12 @@ subprojects {
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     }
+
+    tasks.test {
+        useJUnitPlatform()
+    }
 }
 
-tasks.test {
-    useJUnitPlatform()
+tasks.bootJar {
+    enabled = false
 }
