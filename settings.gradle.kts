@@ -5,5 +5,6 @@ include(
     "common",
     "admin-server",
     "config-server",
-    "eureka-server"
+    "eureka-server",
+    "gateway-service"
 )
