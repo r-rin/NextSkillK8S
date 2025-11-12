@@ -1,2 +1,9 @@
 rootProject.name = "NextSkillK8S"
-include("webapp", "email-service", "common", "admin-server", "config-server")
+include(
+    "webapp",
+    "email-service",
+    "common",
+    "admin-server",
+    "config-server",
+    "eureka-server"
+)
