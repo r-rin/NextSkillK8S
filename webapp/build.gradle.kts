@@ -2,6 +2,7 @@ plugins {
     id("java")
     id("org.springframework.boot")
     id("io.spring.dependency-management")
+    id("com.google.protobuf") version "0.9.4"
 }
 
 dependencies {
@@ -43,6 +44,40 @@ dependencies {
 
     implementation("org.springframework.cloud:spring-cloud-starter-config")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+
+    // gRPC dependencies
+    implementation("net.devh:grpc-client-spring-boot-starter:3.1.0.RELEASE")
+    implementation("io.grpc:grpc-protobuf:1.62.2")
+    implementation("io.grpc:grpc-stub:1.62.2")
+    implementation("io.grpc:grpc-netty-shaded:1.62.2")
+    compileOnly("org.apache.tomcat:annotations-api:6.0.53")
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.25.1"
+    }
+    plugins {
+        create("grpc") {
+            artifact = "io.grpc:protoc-gen-grpc-java:1.62.2"
+        }
+    }
+    generateProtoTasks {
+        all().forEach { task ->
+            task.plugins {
+                create("grpc")
+            }
+        }
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs("build/generated/source/proto/main/grpc")
+            srcDirs("build/generated/source/proto/main/java")
+        }
+    }
 }
 
 tasks.bootJar {

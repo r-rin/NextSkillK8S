@@ -7,6 +7,6 @@ RUN gradle :email-service:bootJar --no-daemon
 FROM eclipse-temurin:17-jre
 WORKDIR /app
 COPY --from=build /app/email-service/build/libs/NextSkill-email-service.jar app.jar
-EXPOSE 8080
+EXPOSE 8080 9091
 ENTRYPOINT ["java","-jar","app.jar"]
 

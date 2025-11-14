@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "ukma.grpc.notification";
+option java_outer_classname = "NotificationProto";
+
+package notification;
+
+// Notification service with server-side streaming
+service NotificationService {
+  // Stream notifications to clients
+  rpc StreamNotifications(NotificationRequest) returns (stream NotificationResponse);
+  
+  // Send a single notification
+  rpc SendNotification(SendNotificationRequest) returns (NotificationResponse);
+  
+  // Get notification status
+  rpc GetNotificationStatus(StatusRequest) returns (StatusResponse);
+}
+
+// Request to start streaming notifications
+message NotificationRequest {
+  string user_id = 1;
+  repeated string notification_types = 2; // e.g., EMAIL, SMS, PUSH
+  int32 max_count = 3; // Optional: max number of notifications to stream
+}
+
+// Request to send a notification
+message SendNotificationRequest {
+  string user_id = 1;
+  string notification_type = 2;
+  string subject = 3;
+  string message = 4;
+  string priority = 5; // LOW, MEDIUM, HIGH, URGENT
+}
+
+// Notification response (streamed or single)
+message NotificationResponse {
+  string notification_id = 1;
+  string user_id = 2;
+  string notification_type = 3;
+  string subject = 4;
+  string message = 5;
+  string priority = 6;
+  int64 timestamp = 7;
+  string status = 8; // PENDING, SENT, DELIVERED, FAILED
+  
+  // Error information if applicable
+  optional ErrorInfo error = 9;
+}
+
+// Status request
+message StatusRequest {
+  string notification_id = 1;
+}
+
+// Status response
+message StatusResponse {
+  string notification_id = 1;
+  string status = 2;
+  int64 last_updated = 3;
+  optional ErrorInfo error = 4;
+}
+
+// Error information
+message ErrorInfo {
+  string error_code = 1;
+  string error_message = 2;
+  string error_type = 3; // VALIDATION, NETWORK, INTERNAL, etc.
+}
