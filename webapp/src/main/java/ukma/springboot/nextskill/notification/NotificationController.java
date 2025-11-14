@@ -19,9 +19,6 @@ public class NotificationController {
 
     private final NotificationGrpcClient notificationGrpcClient;
 
-    /**
-     * Stream notifications for a user (synchronous)
-     */
     @GetMapping("/stream/{userId}")
     public ResponseEntity<List<NotificationResponse>> streamNotifications(
             @PathVariable String userId,
@@ -36,9 +33,6 @@ public class NotificationController {
         return ResponseEntity.ok(notifications);
     }
 
-    /**
-     * Stream notifications for a user (asynchronous)
-     */
     @GetMapping("/stream-async/{userId}")
     public CompletableFuture<ResponseEntity<List<NotificationResponse>>> streamNotificationsAsync(
             @PathVariable String userId,
@@ -51,15 +45,12 @@ public class NotificationController {
                 .thenApply(ResponseEntity::ok);
     }
 
-    /**
-     * Send a single notification
-     */
     @PostMapping("/send")
     public ResponseEntity<NotificationResponse> sendNotification(
             @RequestBody SendNotificationDto request) {
-
+        System.out.println("ENTERED METHOD");
         log.info("REST API: Sending notification for user: {}", request.getUserId());
-        
+
         NotificationResponse response = notificationGrpcClient.sendNotification(
                 request.getUserId(),
                 request.getNotificationType(),
@@ -67,13 +58,11 @@ public class NotificationController {
                 request.getMessage(),
                 request.getPriority()
         );
-        
+        log.info("gRPC CLIENT: Received response: {}", response);
+
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * Get notification status
-     */
     @GetMapping("/status/{notificationId}")
     public ResponseEntity<StatusResponse> getNotificationStatus(@PathVariable String notificationId) {
         log.info("REST API: Getting status for notification: {}", notificationId);
