@@ -4,12 +4,13 @@ import lombok.AllArgsConstructor;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ukma.springboot.nextskill.common.dto.enums.UserRole;
+import ukma.springboot.nextskill.common.dto.responses.CourseResponse;
+import ukma.springboot.nextskill.common.dto.responses.CourseSummaryResponse;
 import ukma.springboot.nextskill.common.exceptions.NoAccessException;
 import ukma.springboot.nextskill.common.exceptions.ResourceNotFoundException;
 import ukma.springboot.nextskill.common.models.entities.CourseEntity;
 import ukma.springboot.nextskill.common.models.entities.UserEntity;
-import ukma.springboot.nextskill.common.dto.enums.UserRole;
-import ukma.springboot.nextskill.common.dto.responses.CourseResponse;
 import ukma.springboot.nextskill.common.dto.responses.UserResponse;
 import ukma.springboot.nextskill.common.dto.views.CourseView;
 import ukma.springboot.nextskill.course.CourseService;
@@ -21,6 +22,7 @@ import ukma.springboot.nextskill.user.UserService;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 @Service
 @AllArgsConstructor
@@ -52,6 +54,13 @@ public class CourseServiceImpl implements CourseService {
         courseValidator.validateForCreation(courseView);
         CourseEntity courseEntity = courseRepository.save(CourseMapper.toCourseEntity(courseView));
         return CourseMapper.toCourseResponse(courseEntity);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public CourseSummaryResponse getSummary(UUID id) {
+        CourseEntity entity = getEntity(id);
+        return CourseMapper.toCourseSummaryResponse(entity);
     }
 
     @Override

@@ -36,6 +36,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("login").permitAll()
+                        .requestMatchers("/api/courses/*/summary").permitAll()
                         .requestMatchers("/actuator/health").permitAll()
                         .requestMatchers("/actuator").permitAll()
                         .requestMatchers("/actuator/**")

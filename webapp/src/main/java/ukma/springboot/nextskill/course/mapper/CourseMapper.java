@@ -7,6 +7,7 @@ import ukma.springboot.nextskill.common.models.entities.UserEntity;
 import ukma.springboot.nextskill.common.models.mappers.SectionMapper;
 import ukma.springboot.nextskill.common.models.mappers.UserMapper;
 import ukma.springboot.nextskill.common.dto.responses.CourseResponse;
+import ukma.springboot.nextskill.common.dto.responses.CourseSummaryResponse;
 import ukma.springboot.nextskill.common.dto.views.CourseView;
 
 import static ukma.springboot.nextskill.common.models.mappers.MapperUtility.mapIfInitialized;
@@ -73,6 +74,25 @@ public class CourseMapper {
                 .sections(courseResponse.getSections().stream()
                         .map(section -> SectionEntity.builder().uuid(section.getUuid()).build())
                         .toList())
+                .build();
+    }
+
+    public static CourseSummaryResponse toCourseSummaryResponse(CourseEntity courseEntity) {
+        if (courseEntity == null) {
+            return null;
+        }
+        int sectionCount = courseEntity.getSections() == null ? 0 : courseEntity.getSections().size();
+        int enrolledCount = courseEntity.getStudents() == null ? 0 : courseEntity.getStudents().size();
+        String teacherFullName = courseEntity.getTeacher() == null
+                ? null
+                : (courseEntity.getTeacher().getName() + " " + courseEntity.getTeacher().getSurname()).trim();
+
+        return CourseSummaryResponse.builder()
+                .uuid(courseEntity.getUuid())
+                .name(courseEntity.getName())
+                .teacherFullName(teacherFullName)
+                .sectionCount(sectionCount)
+                .enrolledStudentCount(enrolledCount)
                 .build();
     }
 }

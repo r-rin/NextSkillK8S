@@ -35,7 +35,7 @@ class EmailServiceImplTest {
         when(restTemplate.postForEntity(eq("http://email.local/api/email/send"), any(HttpEntity.class), eq(String.class)))
                 .thenReturn(ResponseEntity.ok("ok"));
 
-        emailService.sendEmail("to@ex.com", "subj", "text");
+        emailService.sendEmail("to@ex.com", "subj", "text", "HIGH");
 
         ArgumentCaptor<HttpEntity> captor = ArgumentCaptor.forClass(HttpEntity.class);
         verify(restTemplate).postForEntity(eq("http://email.local/api/email/send"), captor.capture(), eq(String.class));
@@ -55,7 +55,7 @@ class EmailServiceImplTest {
         when(restTemplate.postForEntity(anyString(), any(HttpEntity.class), eq(String.class)))
                 .thenThrow(new RestClientException("down"));
 
-        assertDoesNotThrow(() -> emailService.sendEmail("t@e.com", "s", "b"));
+        assertDoesNotThrow(() -> emailService.sendEmail("t@e.com", "s", "b", "HIGH"));
         verify(restTemplate, times(1)).postForEntity(anyString(), any(HttpEntity.class), eq(String.class));
     }
 }

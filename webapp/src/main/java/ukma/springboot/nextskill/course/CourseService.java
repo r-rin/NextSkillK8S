@@ -2,6 +2,7 @@ package ukma.springboot.nextskill.course;
 
 import ukma.springboot.nextskill.common.models.entities.CourseEntity;
 import ukma.springboot.nextskill.common.dto.responses.CourseResponse;
+import ukma.springboot.nextskill.common.dto.responses.CourseSummaryResponse;
 import ukma.springboot.nextskill.common.dto.views.CourseView;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public interface CourseService {
     List<CourseResponse> getAll();
     CourseResponse get(UUID id);
     CourseResponse create(CourseView courseView);
+    CourseSummaryResponse getSummary(UUID id);
     void enrollStudent(UUID courseId, UUID studentId);
     void unrollStudent(UUID courseUuid, UUID studentUuid);
     void delete(UUID id);

@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("org.springframework.cloud.contract") version "4.1.3"
 }
 
 group = "ukma.springboot.nextskill"
@@ -45,6 +46,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("de.codecentric:spring-boot-admin-starter-client")
     implementation("io.micrometer:micrometer-registry-prometheus:1.16.0")
+    testImplementation("org.springframework.cloud:spring-cloud-starter-contract-verifier")
+}
+
+configurations {
+    create("stubs")
 }
 
 tasks.bootJar {
@@ -53,4 +59,16 @@ tasks.bootJar {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+contracts {
+    baseClassForTests.set("ukma.springboot.nextskill.contract.CourseSummaryContractBase")
+}
+
+tasks.named<Test>("contractTest") {
+    useJUnitPlatform()
+}
+
+artifacts {
+    add("stubs", tasks.named("verifierStubsJar"))
 }
